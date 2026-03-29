@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-<script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -214,8 +213,17 @@ footer .copyright{font-size:0.8rem;color:var(--cashmere)}
 <p>Tandm helps busy couples stay deeply connected through shared tools, emotional check-ins, and AI-powered insights.</p>
 
 <div id="waitlist-top" style="animation:fadeUp 1s ease-out 0.45s both">
-<iframe src="https://subscribe-forms.beehiiv.com/1db8bd08-7cc5-4e10-ae8e-7b7b217d7a2a" class="beehiiv-embed" data-test-id="beehiiv-embed" frameborder="0" scrolling="no" style="width:100%;max-width:480px;height:350px;margin:0 auto;display:block;border-radius:0;background-color:transparent;"></iframe>
-<noscript><a href="https://intandm.beehiiv.com/subscribe" style="color:var(--sienna)">Join the waitlist →</a></noscript>
+<form class="waitlist-form" id="form-top" action="https://subscribe-forms.beehiiv.com/1db8bd08-7cc5-4e10-ae8e-7b7b217d7a2a" method="POST" target="_blank" onsubmit="return validateEmail('top')">
+<div class="waitlist-row">
+<input type="email" name="email" placeholder="Enter your email" id="email-top" required>
+<button type="submit">Join the waitlist</button>
+</div>
+<label class="newsletter-opt">
+<input type="checkbox" id="newsletter-top">
+Opt in to receive weekly relationship tips
+</label>
+</form>
+<p class="waitlist-note">Be first in line. No spam, ever.</p>
 </div>
 </section>
 
@@ -300,7 +308,16 @@ footer .copyright{font-size:0.8rem;color:var(--cashmere)}
 <h2>Join couples building <em>stronger</em> bonds</h2>
 <p>Tandm is launching soon. Get early access and be part of the journey from day one.</p>
 <div id="waitlist-bottom">
-<iframe src="https://subscribe-forms.beehiiv.com/1db8bd08-7cc5-4e10-ae8e-7b7b217d7a2a" class="beehiiv-embed" data-test-id="beehiiv-embed" frameborder="0" scrolling="no" style="width:100%;max-width:480px;height:350px;margin:0 auto;display:block;border-radius:0;background-color:transparent;"></iframe>
+<form class="waitlist-form" id="form-bottom" action="https://subscribe-forms.beehiiv.com/1db8bd08-7cc5-4e10-ae8e-7b7b217d7a2a" method="POST" target="_blank" onsubmit="return validateEmail('bottom')">
+<div class="waitlist-row">
+<input type="email" name="email" placeholder="Enter your email" id="email-bottom" required>
+<button type="submit">Get early access</button>
+</div>
+<label class="newsletter-opt">
+<input type="checkbox" id="newsletter-bottom">
+Opt in to receive weekly relationship tips
+</label>
+</form>
 </div>
 </section>
 
@@ -315,6 +332,19 @@ footer .copyright{font-size:0.8rem;color:var(--cashmere)}
 <script>
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>50)});
+
+function validateEmail(loc){
+const input=document.getElementById('email-'+loc);
+const email=input.value.trim();
+const re=/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})+$/;
+if(!email||!re.test(email)){
+input.style.borderColor='#D4918B';
+input.placeholder='Please enter a valid email';
+setTimeout(()=>{input.style.borderColor='';input.placeholder='Enter your email'},3000);
+return false;
+}
+return true;
+}
 
 const observer=new IntersectionObserver((entries)=>{
 entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}});
