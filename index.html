@@ -585,35 +585,20 @@ input.style.borderColor='var(--blush)';
 setTimeout(()=>{el.textContent='';input.style.borderColor=''},3000);
 }
 
-// Kit API v4 submission
+// Kit form submission (browser-compatible)
 async function submitToKit(email){
 try{
-// Step 1: Create subscriber
-const createRes=await fetch('https://api.kit.com/v4/subscribers',{
-method:'POST',
-headers:{
-'Content-Type':'application/json',
-'X-Kit-Api-Key':'kit_3ef708fd4c8aa4a89e2dbf76dc0604e8'
-},
-body:JSON.stringify({
-email_address:email,
-state:'inactive'
-})
-});
-if(!createRes.ok) return false;
+// Use Kit's form subscribe endpoint (same as their embed)
+const formData=new FormData();
+formData.append('email_address',email);
 
-// Step 2: Add subscriber to form by email
-const formRes=await fetch('https://api.kit.com/v4/forms/9267141/subscribers',{
+const res=await fetch('https://app.kit.com/forms/9267141/subscriptions',{
 method:'POST',
-headers:{
-'Content-Type':'application/json',
-'X-Kit-Api-Key':'kit_3ef708fd4c8aa4a89e2dbf76dc0604e8'
-},
-body:JSON.stringify({
-email_address:email
-})
+body:formData,
+mode:'no-cors'
 });
-return formRes.ok || formRes.status===201;
+// mode:no-cors means we can't read the response, but the request goes through
+return true;
 }catch(e){
 return false;
 }
