@@ -414,7 +414,7 @@ nav.scrolled{padding:0.75rem 1.5rem}
 </div>
 <label class="newsletter-opt">
 <input type="checkbox" id="newsletter-top">
-Opt in to receive weekly relationship tips via <strong>&nbsp;In Tandm</strong>
+Opt in to receive weekly relationship tips
 </label>
 <div class="error-msg" id="error-top"></div>
 </div>
@@ -549,7 +549,7 @@ Opt in to receive weekly relationship tips via <strong>&nbsp;In Tandm</strong>
 </div>
 <label class="newsletter-opt">
 <input type="checkbox" id="newsletter-bottom">
-Opt in to receive weekly relationship tips via <strong>&nbsp;In Tandm</strong>
+Opt in to receive weekly relationship tips
 </label>
 <div class="error-msg" id="error-bottom"></div>
 </div>
@@ -585,18 +585,35 @@ input.style.borderColor='var(--blush)';
 setTimeout(()=>{el.textContent='';input.style.borderColor=''},3000);
 }
 
-// Kit API submission
+// Kit API v4 submission
 async function submitToKit(email){
 try{
-const res=await fetch('https://api.convertkit.com/v3/forms/9267141/subscribe',{
+// Step 1: Create subscriber
+const createRes=await fetch('https://api.kit.com/v4/subscribers',{
 method:'POST',
-headers:{'Content-Type':'application/json'},
+headers:{
+'Content-Type':'application/json',
+'X-Kit-Api-Key':'kit_3ef708fd4c8aa4a89e2dbf76dc0604e8'
+},
 body:JSON.stringify({
-api_key:'kit_3ef708fd4c8aa4a89e2dbf76dc0604e8',
-email:email
+email_address:email,
+state:'inactive'
 })
 });
-return res.ok;
+if(!createRes.ok) return false;
+
+// Step 2: Add subscriber to form by email
+const formRes=await fetch('https://api.kit.com/v4/forms/9267141/subscribers',{
+method:'POST',
+headers:{
+'Content-Type':'application/json',
+'X-Kit-Api-Key':'kit_3ef708fd4c8aa4a89e2dbf76dc0604e8'
+},
+body:JSON.stringify({
+email_address:email
+})
+});
+return formRes.ok || formRes.status===201;
 }catch(e){
 return false;
 }
