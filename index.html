@@ -453,59 +453,11 @@ Opt in to receive weekly relationship tips
 </div>
 
 <div class="feature-card">
-<div class="feature-icon snapshots">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-</div>
-<h3>Relationship snapshots</h3>
-<p>Quick emotional check-ins that reveal how you're both feeling — and where to grow closer.</p>
-</div>
-
-<div class="feature-card">
 <div class="feature-icon dateplanner">
 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
 </div>
 <h3>AI date planner</h3>
 <p>Personalized date ideas based on your interests, location, and budget. No more "where should we go?"</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon questions">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-</div>
-<h3>Daily questions</h3>
-<p>One meaningful question every day that sparks real conversation — not small talk.</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon chat">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
-</div>
-<h3>Private chat</h3>
-<p>Your own encrypted space. No ads, no data selling — just you and your person.</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon lovelang">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s-8-4.5-8-11.8A4.9 4.9 0 0112 5a4.9 4.9 0 018 5.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="11" r="2"/></svg>
-</div>
-<h3>Love language quiz</h3>
-<p>Discover how you and your partner give and receive love — then get tips tailored to your styles.</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon photos">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-</div>
-<h3>Photo albums</h3>
-<p>Save your favorite moments in shared albums — dates, trips, and the little things in between.</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon achieve">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-</div>
-<h3>Achievements</h3>
-<p>30 milestones across four categories — celebrate the work you put into your relationship.</p>
 </div>
 
 </div>
@@ -619,12 +571,13 @@ btn.disabled=true;
 const success=await submitToKit(email);
 
 if(success){
-document.getElementById('form-'+loc).style.display='none';
-document.getElementById('success-'+loc).style.display='block';
-if(loc==='top'){
+// Show success on BOTH forms
+['top','bottom'].forEach(function(l){
+document.getElementById('form-'+l).style.display='none';
+document.getElementById('success-'+l).style.display='block';
+});
 const note=document.querySelector('.waitlist-note');
 if(note)note.style.display='none';
-}
 }else{
 btn.textContent=origText;
 btn.disabled=false;
